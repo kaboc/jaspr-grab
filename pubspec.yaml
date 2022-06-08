@@ -1,0 +1,14 @@
+name: jaspr_grab
+description: A package for jaspr to control rebuilds of a widget based on updates of a Listenable such as ChangeNotifier and ValueNotifier.
+version: 0.0.1
+homepage: https://github.com/kaboc/jaspr_grab
+
+environment:
+  sdk: ">=2.17.0 <3.0.0"
+
+dependencies:
+  jaspr: ^0.1.4
+
+dev_dependencies:
+  jaspr_test: ^0.1.0
+  lints: ^2.0.0
