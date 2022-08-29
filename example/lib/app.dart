@@ -28,7 +28,9 @@ class _AppState extends State<App> {
     );
     yield DomComponent(
       tag: 'button',
-      events: {'click': (Object? e) => _notifier.value++},
+      events: {
+        'click': (Object? e) => _notifier.value++,
+      },
       child: Text('Click!'),
     );
   }
