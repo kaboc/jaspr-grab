@@ -2,10 +2,15 @@
 
 ## How to run
 
-1. Run the commands below
-   ```shell
-   $ dart pub global activate jaspr
-   $ jaspr serve
-   ```
-2. Wait until the server is ready.
-3. Open `localhost:8080` in a web browser.
+Run the commands below, wait until the server is ready, and then open `localhost:8080` in a web browser.
+
+```shell
+$ dart pub global activate jaspr
+$ jaspr serve
+```
+
+## How to build
+
+```shell
+$ jaspr build --input web/main.dart
+```
