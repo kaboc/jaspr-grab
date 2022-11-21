@@ -11,4 +11,4 @@ dependencies:
 
 dev_dependencies:
   jaspr_test: ^0.1.0
-  lints: ^2.0.0
+  lints: ^2.0.1
