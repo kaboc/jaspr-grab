@@ -1,10 +1,25 @@
-# Grab for jaspr
+# Grab for Jaspr
 
-This project is experimental.
+The [Jaspr][jaspr] version of Grab.
+
+Grab is a package providing `BuildContext` extension methods to trigger a rebuild
+on change in `Listenable` (`ChangeNotifier`, `ValueNotifier`, etc).
+
+This works the same way as the original [Grab][grab] for Flutter. Please see
+its documents for details.
+
+## Example
+
+- Simple counter app
+    - https://github.com/kaboc/jaspr-grab/tree/main/example
 
 ## Links
 
-- [jaspr](https://pub.dev/packages/jaspr)
-    - Web framework for Dart
-- [Grab](https://pub.dev/packages/grab) for Flutter
-    - A package to control rebuilds of a widget based on updates of a Listenable such as ChangeNotifier and ValueNotifier.
+- [Jaspr][jaspr]
+    - A web framework for building websites in Dart.
+- [Grab][grab] for Flutter
+    - A package providing `BuildContext` extension methods to trigger a rebuild
+      on change in `Listenable` (`ChangeNotifier`, `ValueNotifier`, etc).
+
+[jaspr]: https://pub.dev/packages/jaspr
+[grab]: https://pub.dev/packages/grab
