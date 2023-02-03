@@ -1,4 +1,4 @@
-import 'package:jaspr/jaspr.dart';
+import 'package:jaspr/html.dart';
 import 'package:jaspr_grab/grab.dart';
 
 final _notifier = ValueNotifier(0);
@@ -19,19 +19,13 @@ class _AppState extends State<App> {
 
   @override
   Iterable<Component> build(BuildContext context) sync* {
-    yield DomComponent(
-      tag: 'p',
-      children: [
-        _Counter(),
-        _SlowCounter(),
-      ],
-    );
-    yield DomComponent(
-      tag: 'button',
-      events: {
-        'click': (Object? e) => _notifier.value++,
-      },
-      child: Text('Click!'),
+    yield p(const [
+      _Counter(),
+      _SlowCounter(),
+    ]);
+    yield button(
+      events: {'click': (_) => _notifier.value++},
+      [const Text('Click!')],
     );
   }
 }
@@ -45,10 +39,7 @@ class _Counter extends StatelessComponent with Grab {
     // the value of the notifier is updated.
     final count = context.grab<int>(_notifier);
 
-    yield DomComponent(
-      tag: 'span',
-      child: Text('$count'),
-    );
+    yield span([Text('$count')]);
   }
 }
 
@@ -63,9 +54,6 @@ class _SlowCounter extends StatelessComponent with Grab {
     // while the result of grabAt() here remains the same.
     final count = context.grabAt(_notifier, (int v) => v ~/ 3);
 
-    yield DomComponent(
-      tag: 'span',
-      child: Text('$count'),
-    );
+    yield span([Text('$count')]);
   }
 }

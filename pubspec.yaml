@@ -4,11 +4,11 @@ version: 0.0.1
 homepage: https://github.com/kaboc/jaspr_grab
 
 environment:
-  sdk: ">=2.17.0 <3.0.0"
+  sdk: '>=2.19.0 <3.0.0'
 
 dependencies:
-  jaspr: ^0.1.5
+  jaspr: ^0.2.0+4
 
 dev_dependencies:
-  jaspr_test: ^0.1.0
+  jaspr_test: ^0.2.0
   lints: ^2.0.1
