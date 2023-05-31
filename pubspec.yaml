@@ -8,8 +8,8 @@ environment:
   sdk: '>=2.19.0 <3.0.0'
 
 dependencies:
-  jaspr: ^0.2.0+4
+  jaspr: ^0.3.0
 
 dev_dependencies:
-  jaspr_test: ^0.2.0
+  jaspr_test: ^0.3.0
   lints: ^2.0.1

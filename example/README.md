@@ -5,7 +5,7 @@
 Run the commands below, wait until the server is ready, and then open `localhost:8080` in a web browser.
 
 ```shell
-$ dart pub global activate jaspr
+$ dart pub global activate jaspr_cli
 $ jaspr serve
 ```
 
