@@ -37,14 +37,11 @@ void main() {
         await tester.pumpComponent(
           StatelessWithMixin(
             funcCalledInBuild: (context) {
-              value1 = context.grabAt(
-                changeNotifier,
+              value1 = changeNotifier.grabAt(
+                context,
                 (TestChangeNotifier n) => n.intValue,
               );
-              value2 = context.grabAt(
-                valueNotifier,
-                (TestState s) => s.intValue,
-              );
+              value2 = valueNotifier.grabAt(context, (s) => s.intValue);
               buildCount++;
             },
           ),
@@ -81,26 +78,18 @@ void main() {
               yield StatelessWithMixin(
                 funcCalledInBuild: isSwapped
                     ? (context) {
-                        value2 = context.grabAt(
-                          valueNotifier,
-                          (TestState s) => s.stringValue,
-                        );
-                        value1 = context.grabAt(
-                          valueNotifier,
-                          (TestState s) => s.intValue,
-                        );
+                        value2 =
+                            valueNotifier.grabAt(context, (s) => s.stringValue);
+                        value1 =
+                            valueNotifier.grabAt(context, (s) => s.intValue);
                         isSwapped = true;
                         buildCount++;
                       }
                     : (context) {
-                        value1 = context.grabAt(
-                          valueNotifier,
-                          (TestState s) => s.intValue,
-                        );
-                        value2 = context.grabAt(
-                          valueNotifier,
-                          (TestState s) => s.stringValue,
-                        );
+                        value1 =
+                            valueNotifier.grabAt(context, (s) => s.intValue);
+                        value2 =
+                            valueNotifier.grabAt(context, (s) => s.stringValue);
                         isSwapped = false;
                         buildCount++;
                       },

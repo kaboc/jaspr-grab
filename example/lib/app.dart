@@ -37,7 +37,7 @@ class _Counter extends StatelessComponent with Grab {
   Iterable<Component> build(BuildContext context) sync* {
     // With context.grab(), the widget is rebuilt every time
     // the value of the notifier is updated.
-    final count = context.grab<int>(_notifier);
+    final count = _notifier.grab(context);
 
     yield span([Text('$count')]);
   }
@@ -52,7 +52,7 @@ class _SlowCounter extends StatelessComponent with Grab {
     // of the notifier, like 0, 0, 0, 1, 1, 1, 2, 2, 2...
     // Updating the value of the notifier doesn't trigger rebuilds
     // while the result of grabAt() here remains the same.
-    final count = context.grabAt(_notifier, (int v) => v ~/ 3);
+    final count = _notifier.grabAt(context, (v) => v ~/ 3);
 
     yield span([Text('$count')]);
   }

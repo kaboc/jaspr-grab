@@ -2,9 +2,9 @@ import 'extensions.dart';
 import 'mixins.dart';
 import 'types.dart';
 
-/// Error thrown when [GrabBuildContext.grab] or [GrabBuildContext.grabAt]
-/// is used without a mixin, either [StatelessGrabMixin] / [Grab] in a
-/// StatelessComponent or [StatefulGrabMixin] / [Grabful] in a StatefulComponent.
+/// Error thrown when `grab()` or `grabAt()` is used without a mixin,
+/// either [StatelessGrabMixin] / [Grab] in a StatelessComponent or
+/// [StatefulGrabMixin] / [Grabful] in a StatefulComponent.
 class GrabMixinError extends Error {
   @override
   String toString() =>
