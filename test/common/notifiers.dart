@@ -1,4 +1,4 @@
-import 'package:jaspr/jaspr.dart';
+import 'package:jaspr/components.dart';
 
 class TestChangeNotifier extends ChangeNotifier {
   TestChangeNotifier();
@@ -45,12 +45,4 @@ class TestState {
 
   @override
   int get hashCode => Object.hashAll([intValue, stringValue]);
-}
-
-class FlagNotifier extends ValueNotifier<bool> {
-  FlagNotifier() : super(false);
-
-  void toggle() {
-    value = !value;
-  }
 }

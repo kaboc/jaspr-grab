@@ -1,15 +1,15 @@
-import 'dart:async';
-
+import 'package:jaspr/components.dart';
 import 'package:jaspr_test/jaspr_test.dart';
 
+import 'package:jaspr_grab/grab.dart';
+
 import '../common/notifiers.dart';
-import '../common/stateful_components.dart';
+import '../common/widgets.dart';
 
 void main() {
-  late ComponentTester tester;
+  late final ComponentTester tester;
   late TestChangeNotifier changeNotifier;
   late TestValueNotifier valueNotifier;
-  late StreamController<bool> flagController;
 
   setUpAll(() => tester = ComponentTester.setUp());
   tearDownAll(ComponentTester.tearDown);
@@ -17,12 +17,10 @@ void main() {
   setUp(() {
     changeNotifier = TestChangeNotifier();
     valueNotifier = TestValueNotifier();
-    flagController = StreamController<bool>();
   });
   tearDown(() {
     changeNotifier.dispose();
     valueNotifier.dispose();
-    flagController.close();
   });
 
   group('Advanced', () {
@@ -37,14 +35,16 @@ void main() {
         var buildCount = 0;
 
         await tester.pumpComponent(
-          MultiListenablesStateful(
-            listenable1: changeNotifier,
-            listenable2: valueNotifier,
-            selector1: (TestChangeNotifier notifier) => notifier.intValue,
-            selector2: (TestState state) => state.intValue,
-            onBuild: (int? v1, int? v2) {
-              value1 = v1;
-              value2 = v2;
+          StatefulWithMixin(
+            funcCalledInBuild: (context) {
+              value1 = context.grabAt(
+                changeNotifier,
+                (TestChangeNotifier n) => n.intValue,
+              );
+              value2 = context.grabAt(
+                valueNotifier,
+                (TestState s) => s.intValue,
+              );
               buildCount++;
             },
           ),
@@ -72,39 +72,74 @@ void main() {
 
         int? value1;
         String? value2;
-        bool? flag;
+        var isSwapped = false;
+        var buildCount = 0;
 
         await tester.pumpComponent(
-          ExtOrderSwitchStateful(
-            flagStream: flagController.stream,
-            listenable: valueNotifier,
-            selector1: (TestState state) => state.intValue,
-            selector2: (TestState state) => state.stringValue,
-            onBuild: (int? v1, String? v2, bool f) {
-              value1 = v1;
-              value2 = v2;
-              flag = f;
+          StatefulBuilder(
+            builder: (_, setState) sync* {
+              yield StatefulWithMixin(
+                funcCalledInBuild: isSwapped
+                    ? (context) {
+                        value2 = context.grabAt(
+                          valueNotifier,
+                          (TestState s) => s.stringValue,
+                        );
+                        value1 = context.grabAt(
+                          valueNotifier,
+                          (TestState s) => s.intValue,
+                        );
+                        isSwapped = true;
+                        buildCount++;
+                      }
+                    : (context) {
+                        value1 = context.grabAt(
+                          valueNotifier,
+                          (TestState s) => s.intValue,
+                        );
+                        value2 = context.grabAt(
+                          valueNotifier,
+                          (TestState s) => s.stringValue,
+                        );
+                        isSwapped = false;
+                        buildCount++;
+                      },
+              );
+              yield DomComponent(
+                tag: 'button',
+                events: {
+                  'click': (_) => setState(() => isSwapped = !isSwapped),
+                },
+                child: const Text('test'),
+              );
             },
           ),
         );
 
+        final buttonFinder = find.tag('button').first;
+
         expect(value1, equals(10));
         expect(value2, equals('abc'));
-        expect(flag, isFalse);
+        expect(isSwapped, isFalse);
+        expect(buildCount, 1);
 
         valueNotifier.updateIntValue(20);
-        flagController.sink.add(true);
+        await tester.click(buttonFinder);
         await tester.pump();
+
         expect(value1, equals(20));
         expect(value2, equals('abc'));
-        expect(flag, isTrue);
+        expect(isSwapped, isTrue);
+        expect(buildCount, 2);
 
         valueNotifier.updateStringValue('def');
-        flagController.sink.add(false);
+        await tester.click(buttonFinder);
         await tester.pump();
+
         expect(value1, equals(20));
         expect(value2, equals('def'));
-        expect(flag, isFalse);
+        expect(isSwapped, isFalse);
+        expect(buildCount, 3);
       },
     );
   });

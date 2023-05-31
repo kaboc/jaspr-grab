@@ -1,10 +1,12 @@
 import 'package:jaspr_test/jaspr_test.dart';
 
+import 'package:jaspr_grab/grab.dart';
+
 import '../common/notifiers.dart';
-import '../common/stateless_components.dart';
+import '../common/widgets.dart';
 
 void main() {
-  late ComponentTester tester;
+  late final ComponentTester tester;
   late TestChangeNotifier changeNotifier;
   late TestValueNotifier valueNotifier;
 
@@ -26,9 +28,10 @@ void main() {
       () async {
         Object? value;
         await tester.pumpComponent(
-          GrabStateless(
-            listenable: changeNotifier,
-            onBuild: (Object v) => value = v,
+          StatelessWithMixin(
+            funcCalledInBuild: (context) {
+              value = context.grab(changeNotifier);
+            },
           ),
         );
         expect(value, equals(changeNotifier));
@@ -40,9 +43,10 @@ void main() {
       () async {
         Object? value;
         await tester.pumpComponent(
-          GrabStateless(
-            listenable: valueNotifier,
-            onBuild: (Object v) => value = v,
+          StatelessWithMixin(
+            funcCalledInBuild: (context) {
+              value = context.grab(valueNotifier);
+            },
           ),
         );
         expect(value, equals(valueNotifier.value));
@@ -56,9 +60,9 @@ void main() {
         var stringValue = '';
 
         await tester.pumpComponent(
-          GrabStateless(
-            listenable: changeNotifier,
-            onBuild: (_) {
+          StatelessWithMixin(
+            funcCalledInBuild: (context) {
+              context.grab<TestChangeNotifier>(changeNotifier);
               intValue = changeNotifier.intValue;
               stringValue = changeNotifier.stringValue;
             },
@@ -85,9 +89,10 @@ void main() {
         var state = const TestState();
 
         await tester.pumpComponent(
-          GrabStateless(
-            listenable: valueNotifier,
-            onBuild: (Object v) => state = v as TestState,
+          StatelessWithMixin(
+            funcCalledInBuild: (context) {
+              state = context.grab(valueNotifier);
+            },
           ),
         );
 

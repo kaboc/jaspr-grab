@@ -1,11 +1,13 @@
-import 'package:jaspr/jaspr.dart';
+import 'package:jaspr/components.dart';
 import 'package:jaspr_test/jaspr_test.dart';
 
+import 'package:jaspr_grab/grab.dart';
+
 import '../common/notifiers.dart';
-import '../common/stateless_components.dart';
+import '../common/widgets.dart';
 
 void main() {
-  late ComponentTester tester;
+  late final ComponentTester tester;
   late TestChangeNotifier changeNotifier;
   late TestValueNotifier valueNotifier;
 
@@ -27,9 +29,13 @@ void main() {
       () async {
         Object? selectorValue;
         await tester.pumpComponent(
-          GrabAtStateless(
-            listenable: changeNotifier,
-            selector: (value) => selectorValue = value,
+          StatelessWithMixin(
+            funcCalledInBuild: (context) {
+              context.grabAt(
+                changeNotifier,
+                (TestChangeNotifier n) => selectorValue = n,
+              );
+            },
           ),
         );
         expect(selectorValue, equals(changeNotifier));
@@ -43,9 +49,13 @@ void main() {
 
         Object? selectorValue;
         await tester.pumpComponent(
-          GrabAtStateless(
-            listenable: valueNotifier,
-            selector: (value) => selectorValue = value,
+          StatelessWithMixin(
+            funcCalledInBuild: (context) {
+              context.grabAt(
+                valueNotifier,
+                (TestState s) => selectorValue = s,
+              );
+            },
           ),
         );
         expect(selectorValue, equals(valueNotifier.value));
@@ -59,10 +69,13 @@ void main() {
 
         int? value;
         await tester.pumpComponent(
-          GrabAtStateless(
-            listenable: valueNotifier,
-            selector: (TestState state) => state.intValue,
-            onBuild: (int? v) => value = v,
+          StatelessWithMixin(
+            funcCalledInBuild: (context) {
+              value = context.grabAt(
+                valueNotifier,
+                (TestState s) => s.intValue,
+              );
+            },
           ),
         );
         expect(value, equals(10));
@@ -76,10 +89,13 @@ void main() {
 
         int? value;
         await tester.pumpComponent(
-          GrabAtStateless(
-            listenable: valueNotifier,
-            selector: (TestState state) => state.intValue,
-            onBuild: (int? v) => value = v,
+          StatelessWithMixin(
+            funcCalledInBuild: (context) {
+              value = context.grabAt(
+                valueNotifier,
+                (TestState s) => s.intValue,
+              );
+            },
           ),
         );
 
@@ -99,18 +115,27 @@ void main() {
         var buildCount2 = 0;
 
         await tester.pumpComponent(
-          MultiGrabAtsStateless(
-            listenable: changeNotifier,
-            selector1: (TestChangeNotifier notifier) => notifier.intValue,
-            selector2: (TestChangeNotifier notifier) => notifier.stringValue,
-            onBuild1: (int? v) {
-              value1 = v;
-              buildCount1++;
-            },
-            onBuild2: (String? v) {
-              value2 = v;
-              buildCount2++;
-            },
+          Column(
+            children: [
+              StatelessWithMixin(
+                funcCalledInBuild: (context) {
+                  value1 = context.grabAt(
+                    changeNotifier,
+                    (TestChangeNotifier n) => n.intValue,
+                  );
+                  buildCount1++;
+                },
+              ),
+              StatelessWithMixin(
+                funcCalledInBuild: (context) {
+                  value2 = context.grabAt(
+                    changeNotifier,
+                    (TestChangeNotifier n) => n.stringValue,
+                  );
+                  buildCount2++;
+                },
+              ),
+            ],
           ),
         );
 
@@ -147,18 +172,27 @@ void main() {
         var buildCount2 = 0;
 
         await tester.pumpComponent(
-          MultiGrabAtsStateless(
-            listenable: valueNotifier,
-            selector1: (TestState state) => state.intValue,
-            selector2: (TestState state) => state.stringValue,
-            onBuild1: (int? v) {
-              value1 = v;
-              buildCount1++;
-            },
-            onBuild2: (String? v) {
-              value2 = v;
-              buildCount2++;
-            },
+          Column(
+            children: [
+              StatelessWithMixin(
+                funcCalledInBuild: (context) {
+                  value1 = context.grabAt(
+                    valueNotifier,
+                    (TestState s) => s.intValue,
+                  );
+                  buildCount1++;
+                },
+              ),
+              StatelessWithMixin(
+                funcCalledInBuild: (context) {
+                  value2 = context.grabAt(
+                    valueNotifier,
+                    (TestState s) => s.stringValue,
+                  );
+                  buildCount2++;
+                },
+              ),
+            ],
           ),
         );
 
@@ -195,18 +229,29 @@ void main() {
         var buildCount2 = 0;
 
         await tester.pumpComponent(
-          MultiGrabAtsStateless(
-            listenable: changeNotifier,
-            selector1: (TestChangeNotifier notifier) => notifier,
-            selector2: (TestChangeNotifier notifier) => notifier,
-            onBuild1: (TestChangeNotifier notifier) {
-              value1 = notifier.intValue;
-              buildCount1++;
-            },
-            onBuild2: (TestChangeNotifier notifier) {
-              value2 = notifier.stringValue;
-              buildCount2++;
-            },
+          Column(
+            children: [
+              StatelessWithMixin(
+                funcCalledInBuild: (context) {
+                  final notifier = context.grabAt(
+                    changeNotifier,
+                    (TestChangeNotifier n) => n,
+                  );
+                  value1 = notifier.intValue;
+                  buildCount1++;
+                },
+              ),
+              StatelessWithMixin(
+                funcCalledInBuild: (context) {
+                  final notifier = context.grabAt(
+                    changeNotifier,
+                    (TestChangeNotifier n) => n,
+                  );
+                  value2 = notifier.stringValue;
+                  buildCount2++;
+                },
+              ),
+            ],
           ),
         );
 
@@ -236,15 +281,18 @@ void main() {
         await tester.pumpComponent(
           StatefulBuilder(
             builder: (_, setState) sync* {
-              yield GrabAtStateless(
-                listenable: valueNotifier,
-                selector: (TestState state) => state.intValue * multiplier,
-                onBuild: (int? v) => value = v,
+              yield StatelessWithMixin(
+                funcCalledInBuild: (context) {
+                  value = context.grabAt(
+                    valueNotifier,
+                    (TestState s) => s.intValue * multiplier,
+                  );
+                },
               );
               yield DomComponent(
                 tag: 'button',
                 events: {
-                  'click': (Object? _) => setState(() => multiplier = 3),
+                  'click': (_) => setState(() => multiplier = 3),
                 },
                 child: const Text('test'),
               );
