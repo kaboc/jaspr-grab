@@ -1,3 +1,7 @@
+## 0.2.1
+
+- Small refactoring and optimisation.
+
 ## 0.2.0
 
 - **Breaking:**
