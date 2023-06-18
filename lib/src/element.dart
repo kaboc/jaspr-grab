@@ -2,7 +2,7 @@ import 'package:jaspr/jaspr.dart';
 
 import 'types.dart';
 
-extension ListenableX on Listenable {
+extension on Listenable {
   R listenableOrValue<R>() {
     final listenable = this;
     return (listenable is ValueListenable ? listenable.value : listenable) as R;
@@ -27,7 +27,7 @@ mixin GrabElement on MultiChildElement {
     // is not triggered by causes other than update of listenable value.
     _reset();
 
-    // _reset() must precede a rebuild. Don't change the order.
+    // This must be after _reset(). Don't change the order.
     super.performRebuild();
   }
 
@@ -56,6 +56,10 @@ mixin GrabElement on MultiChildElement {
   }
 
   void _listener(Listenable listenable) {
+    if (dirty) {
+      return;
+    }
+
     final comparators = _comparators[listenable]!;
 
     for (var i = 0; i < comparators.length; i++) {
