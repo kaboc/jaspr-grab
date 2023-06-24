@@ -2,7 +2,6 @@ import 'package:jaspr/jaspr.dart';
 
 import 'element.dart';
 import 'errors.dart';
-import 'extensions.dart';
 import 'types.dart';
 
 /// A mixin used on [StatelessComponent] for making Grab available
