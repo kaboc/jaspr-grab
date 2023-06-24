@@ -7,12 +7,8 @@ import '../common/notifiers.dart';
 import '../common/widgets.dart';
 
 void main() {
-  late final ComponentTester tester;
   late TestChangeNotifier changeNotifier;
   late TestValueNotifier valueNotifier;
-
-  setUpAll(() => tester = ComponentTester.setUp());
-  tearDownAll(ComponentTester.tearDown);
 
   setUp(() {
     changeNotifier = TestChangeNotifier();
@@ -24,9 +20,9 @@ void main() {
   });
 
   group('Advanced', () {
-    test(
+    testComponents(
       'Updating multiple Listenables in a frame triggers a single rebuild',
-      () async {
+      (tester) async {
         changeNotifier.updateIntValue(10);
         valueNotifier.updateIntValue(20);
 
@@ -60,9 +56,9 @@ void main() {
       },
     );
 
-    test(
+    testComponents(
       "Switching order of grabAt's doesn't affect behaviour",
-      () async {
+      (tester) async {
         valueNotifier
           ..updateIntValue(10)
           ..updateStringValue('abc');

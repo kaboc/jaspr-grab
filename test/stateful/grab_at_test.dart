@@ -7,12 +7,8 @@ import '../common/notifiers.dart';
 import '../common/widgets.dart';
 
 void main() {
-  late final ComponentTester tester;
   late TestChangeNotifier changeNotifier;
   late TestValueNotifier valueNotifier;
-
-  setUpAll(() => tester = ComponentTester.setUp());
-  tearDownAll(ComponentTester.tearDown);
 
   setUp(() {
     changeNotifier = TestChangeNotifier();
@@ -24,9 +20,9 @@ void main() {
   });
 
   group('grabAt', () {
-    test(
+    testComponents(
       'With non-ValueListenable, listenable itself is passed to selector',
-      () async {
+      (tester) async {
         Object? selectorValue;
         await tester.pumpComponent(
           StatefulWithMixin(
@@ -39,9 +35,9 @@ void main() {
       },
     );
 
-    test(
+    testComponents(
       'With ValueListenable, its value is passed to selector',
-      () async {
+      (tester) async {
         valueNotifier.updateIntValue(10);
 
         Object? selectorValue;
@@ -56,9 +52,9 @@ void main() {
       },
     );
 
-    test(
+    testComponents(
       'Returns selected value',
-      () async {
+      (tester) async {
         valueNotifier.updateIntValue(10);
 
         int? value;
@@ -73,9 +69,9 @@ void main() {
       },
     );
 
-    test(
+    testComponents(
       'Rebuilds widget and returns latest value when listenable is updated',
-      () async {
+      (tester) async {
         valueNotifier.updateIntValue(10);
 
         int? value;
@@ -93,10 +89,10 @@ void main() {
       },
     );
 
-    test(
+    testComponents(
       'Rebuilds widget only when listenable is non-ValueListenable and '
       'property chosen by selector is updated',
-      () async {
+      (tester) async {
         int? value1;
         String? value2;
         var buildCount1 = 0;
@@ -150,10 +146,10 @@ void main() {
       },
     );
 
-    test(
+    testComponents(
       'Rebuilds widget only when listenable is ValueListenable and '
       'property chosen by selector is updated',
-      () async {
+      (tester) async {
         int? value1;
         String? value2;
         var buildCount1 = 0;
@@ -201,10 +197,10 @@ void main() {
       },
     );
 
-    test(
+    testComponents(
       'Rebuilds widget whenever listenable notifies '
       'if listenable itself is returned from selector',
-      () async {
+      (tester) async {
         int? value1;
         String? value2;
         var buildCount1 = 0;
@@ -253,9 +249,9 @@ void main() {
       },
     );
 
-    test(
+    testComponents(
       'Returns new value on rebuilt by other causes than listenable update too',
-      () async {
+      (tester) async {
         valueNotifier.updateIntValue(10);
         var multiplier = 2;
 

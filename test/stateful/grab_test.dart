@@ -6,12 +6,8 @@ import '../common/notifiers.dart';
 import '../common/widgets.dart';
 
 void main() {
-  late final ComponentTester tester;
   late TestChangeNotifier changeNotifier;
   late TestValueNotifier valueNotifier;
-
-  setUpAll(() => tester = ComponentTester.setUp());
-  tearDownAll(ComponentTester.tearDown);
 
   setUp(() {
     changeNotifier = TestChangeNotifier();
@@ -23,9 +19,9 @@ void main() {
   });
 
   group('grab', () {
-    test(
+    testComponents(
       'With non-ValueListenable, listenable itself is returned',
-      () async {
+      (tester) async {
         Object? value;
         await tester.pumpComponent(
           StatefulWithMixin(
@@ -38,9 +34,9 @@ void main() {
       },
     );
 
-    test(
+    testComponents(
       'With ValueListenable, its value is returned',
-      () async {
+      (tester) async {
         Object? value;
         await tester.pumpComponent(
           StatefulWithMixin(
@@ -53,9 +49,9 @@ void main() {
       },
     );
 
-    test(
+    testComponents(
       'Rebuilds widget whenever non-ValueListenable notifies',
-      () async {
+      (tester) async {
         var intValue = 0;
         var stringValue = '';
 
@@ -83,9 +79,9 @@ void main() {
       },
     );
 
-    test(
+    testComponents(
       'Rebuilds widget when any property of ValueListenable value is updated',
-      () async {
+      (tester) async {
         var state = const TestState();
 
         await tester.pumpComponent(
