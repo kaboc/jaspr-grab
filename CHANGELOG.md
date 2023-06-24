@@ -1,3 +1,9 @@
+## 0.3.0
+
+- Raise minimum Dart SDK version to 3.0.0.
+- Bump jaspr to 0.5.0.
+- Update dependencies.
+
 ## 0.2.1
 
 - Small refactoring and optimisation.
