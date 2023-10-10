@@ -35,7 +35,7 @@ class _Counter extends StatelessComponent with Grab {
 
   @override
   Iterable<Component> build(BuildContext context) sync* {
-    // With context.grab(), the widget is rebuilt every time
+    // With grab(), the widget is rebuilt every time
     // the value of the notifier is updated.
     final count = _notifier.grab(context);
 
