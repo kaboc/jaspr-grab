@@ -1,4 +1,4 @@
-import 'package:jaspr/components.dart';
+import 'package:jaspr/ui.dart';
 
 class TestChangeNotifier extends ChangeNotifier {
   TestChangeNotifier();

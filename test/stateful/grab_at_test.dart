@@ -1,4 +1,4 @@
-import 'package:jaspr/components.dart';
+import 'package:jaspr/ui.dart';
 import 'package:jaspr_test/jaspr_test.dart';
 
 import 'package:jaspr_grab/grab.dart';

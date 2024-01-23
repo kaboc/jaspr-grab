@@ -1,4 +1,4 @@
-import 'package:jaspr/html.dart';
+import 'package:jaspr/jaspr.dart';
 import 'package:jaspr_grab/grab.dart';
 
 final _notifier = ValueNotifier(0);
