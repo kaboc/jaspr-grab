@@ -1,8 +1,8 @@
 name: jaspr_grab
 description: A package for jaspr providing mixins and extension methods to trigger a rebuild on change in a Listenable (ChangeNotifier, ValueNotifier, etc).
 publish_to: 'none'
-version: 0.3.1
-homepage: https://github.com/kaboc/jaspr_grab
+version: 0.4.0
+homepage: https://github.com/kaboc/jaspr-grab
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
