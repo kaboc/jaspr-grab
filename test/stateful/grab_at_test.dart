@@ -22,9 +22,9 @@ void main() {
   group('grabAt', () {
     testComponents(
       'With non-ValueListenable, listenable itself is passed to selector',
-      (tester) async {
+      (tester) {
         Object? selectorValue;
-        await tester.pumpComponent(
+        tester.pumpComponent(
           StatefulWithMixin(
             funcCalledInBuild: (context) {
               changeNotifier.grabAt(context, (n) => selectorValue = n);
@@ -37,11 +37,11 @@ void main() {
 
     testComponents(
       'With ValueListenable, its value is passed to selector',
-      (tester) async {
+      (tester) {
         valueNotifier.updateIntValue(10);
 
         Object? selectorValue;
-        await tester.pumpComponent(
+        tester.pumpComponent(
           StatefulWithMixin(
             funcCalledInBuild: (context) {
               valueNotifier.grabAt(context, (s) => selectorValue = s);
@@ -54,11 +54,11 @@ void main() {
 
     testComponents(
       'Returns selected value',
-      (tester) async {
+      (tester) {
         valueNotifier.updateIntValue(10);
 
         int? value;
-        await tester.pumpComponent(
+        tester.pumpComponent(
           StatefulWithMixin(
             funcCalledInBuild: (context) {
               value = valueNotifier.grabAt(context, (s) => s.intValue);
@@ -75,7 +75,7 @@ void main() {
         valueNotifier.updateIntValue(10);
 
         int? value;
-        await tester.pumpComponent(
+        tester.pumpComponent(
           StatefulWithMixin(
             funcCalledInBuild: (context) {
               value = valueNotifier.grabAt(context, (s) => s.intValue);
@@ -98,7 +98,7 @@ void main() {
         var buildCount1 = 0;
         var buildCount2 = 0;
 
-        await tester.pumpComponent(
+        tester.pumpComponent(
           Column(
             children: [
               StatefulWithMixin(
@@ -155,7 +155,7 @@ void main() {
         var buildCount1 = 0;
         var buildCount2 = 0;
 
-        await tester.pumpComponent(
+        tester.pumpComponent(
           Column(
             children: [
               StatefulWithMixin(
@@ -206,7 +206,7 @@ void main() {
         var buildCount1 = 0;
         var buildCount2 = 0;
 
-        await tester.pumpComponent(
+        tester.pumpComponent(
           Column(
             children: [
               StatefulWithMixin(
@@ -256,7 +256,7 @@ void main() {
         var multiplier = 2;
 
         int? value;
-        await tester.pumpComponent(
+        tester.pumpComponent(
           StatefulBuilder(
             builder: (_, setState) sync* {
               yield StatefulWithMixin(

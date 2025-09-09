@@ -30,7 +30,7 @@ void main() {
         int? value2;
         var buildCount = 0;
 
-        await tester.pumpComponent(
+        tester.pumpComponent(
           StatelessWithMixin(
             funcCalledInBuild: (context) {
               value1 = changeNotifier.grabAt(
@@ -68,7 +68,7 @@ void main() {
         var isSwapped = false;
         var buildCount = 0;
 
-        await tester.pumpComponent(
+        tester.pumpComponent(
           StatefulBuilder(
             builder: (_, setState) sync* {
               yield StatelessWithMixin(

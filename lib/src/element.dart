@@ -24,7 +24,7 @@ class _Handler {
   }
 }
 
-mixin GrabElement on MultiChildElement {
+mixin GrabElement on BuildableElement {
   final Map<Listenable, _Handler> _handlers = {};
 
   @override

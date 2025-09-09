@@ -21,9 +21,9 @@ void main() {
   group('grab', () {
     testComponents(
       'With non-ValueListenable, listenable itself is returned',
-      (tester) async {
+      (tester) {
         Object? value;
-        await tester.pumpComponent(
+        tester.pumpComponent(
           StatelessWithMixin(
             funcCalledInBuild: (context) {
               value = changeNotifier.grab(context);
@@ -36,9 +36,9 @@ void main() {
 
     testComponents(
       'With ValueListenable, its value is returned',
-      (tester) async {
+      (tester) {
         Object? value;
-        await tester.pumpComponent(
+        tester.pumpComponent(
           StatelessWithMixin(
             funcCalledInBuild: (context) {
               value = valueNotifier.grab(context);
@@ -55,7 +55,7 @@ void main() {
         var intValue = 0;
         var stringValue = '';
 
-        await tester.pumpComponent(
+        tester.pumpComponent(
           StatelessWithMixin(
             funcCalledInBuild: (context) {
               changeNotifier.grab(context);
@@ -84,7 +84,7 @@ void main() {
       (tester) async {
         var state = const TestState();
 
-        await tester.pumpComponent(
+        tester.pumpComponent(
           StatelessWithMixin(
             funcCalledInBuild: (context) {
               state = valueNotifier.grab(context);
