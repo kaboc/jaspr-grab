@@ -1,7 +1,7 @@
 import 'package:jaspr/jaspr.dart';
 import 'package:jaspr_grab/grab.dart';
 
-final _notifier = ValueNotifier(0);
+final ValueNotifier<int> _notifier = ValueNotifier(0);
 
 class App extends StatefulComponent {
   const App();

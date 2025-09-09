@@ -95,11 +95,11 @@ mixin GrabElement on MultiChildElement {
 
     final value = selector(listenable.listenableOrValue());
 
-    _handlers[listenable]
-        ?.rebuildDeciders
-        // There is no need to check whether the same function is
-        // already in the list because it is cleared on every build.
-        .add(() => _shouldRebuild(listenable, selector, value));
+    // There is no need to check whether the same function is
+    // already in the list because it is cleared on every build.
+    _handlers[listenable]?.rebuildDeciders.add(
+      () => _shouldRebuild(listenable, selector, value),
+    );
 
     return value;
   }
