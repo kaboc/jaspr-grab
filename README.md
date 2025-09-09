@@ -1,12 +1,12 @@
 # Grab for Jaspr
 
-The [Jaspr][jaspr] version of Grab.
+The [Jaspr][jaspr] version of [Grab][grab].
 
 Grab is a package providing mixins and extension methods to trigger a rebuild
-on change in a `Listenable` (`ChangeNotifier`, `ValueNotifier`, etc).
+upon change in a `Listenable` (`ChangeNotifier`, `ValueNotifier`, etc).
 
-This works the same way as the original [Grab][grab] for Flutter. Please see
-its documents for details.
+This package works the same way as older versions of the Grab package for Flutter.
+Please see its 0.4.3 document [here][grab-doc] for details.
 
 ## Example
 
@@ -22,3 +22,4 @@ its documents for details.
 
 [jaspr]: https://pub.dev/packages/jaspr
 [grab]: https://pub.dev/packages/grab
+[grab-doc]: https://pub.dev/packages/grab/versions/0.4.3
