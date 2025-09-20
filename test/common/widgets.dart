@@ -8,8 +8,9 @@ class StatelessWithoutMixin extends StatelessComponent {
   final void Function(BuildContext) funcCalledInBuild;
 
   @override
-  Iterable<Component> build(BuildContext context) sync* {
+  Component build(BuildContext context) {
     funcCalledInBuild(context);
+    return const Component.empty();
   }
 }
 
@@ -24,8 +25,9 @@ class StatefulWithoutMixin extends StatefulComponent {
 
 class _StatefulWithoutMixinState extends State<StatefulWithoutMixin> {
   @override
-  Iterable<Component> build(BuildContext context) sync* {
+  Component build(BuildContext context) {
     component.funcCalledInBuild(context);
+    return const Component.empty();
   }
 }
 
@@ -35,8 +37,9 @@ class StatelessWithMixin extends StatelessComponent with Grab {
   final void Function(BuildContext) funcCalledInBuild;
 
   @override
-  Iterable<Component> build(BuildContext context) sync* {
+  Component build(BuildContext context) {
     funcCalledInBuild(context);
+    return const Component.empty();
   }
 }
 
@@ -51,7 +54,8 @@ class StatefulWithMixin extends StatefulComponent with Grabful {
 
 class _StatefulWithMixinState extends State<StatefulWithMixin> {
   @override
-  Iterable<Component> build(BuildContext context) sync* {
+  Component build(BuildContext context) {
     component.funcCalledInBuild(context);
+    return const Component.empty();
   }
 }

@@ -70,34 +70,41 @@ void main() {
 
         tester.pumpComponent(
           StatefulBuilder(
-            builder: (_, setState) sync* {
-              yield StatelessWithMixin(
+            builder: (_, setState) => fragment([
+              StatelessWithMixin(
                 funcCalledInBuild: isSwapped
                     ? (context) {
-                        value2 =
-                            valueNotifier.grabAt(context, (s) => s.stringValue);
-                        value1 =
-                            valueNotifier.grabAt(context, (s) => s.intValue);
+                        value2 = valueNotifier.grabAt(
+                          context,
+                          (s) => s.stringValue,
+                        );
+                        value1 = valueNotifier.grabAt(
+                          context,
+                          (s) => s.intValue,
+                        );
                         isSwapped = true;
                         buildCount++;
                       }
                     : (context) {
-                        value1 =
-                            valueNotifier.grabAt(context, (s) => s.intValue);
-                        value2 =
-                            valueNotifier.grabAt(context, (s) => s.stringValue);
+                        value1 = valueNotifier.grabAt(
+                          context,
+                          (s) => s.intValue,
+                        );
+                        value2 = valueNotifier.grabAt(
+                          context,
+                          (s) => s.stringValue,
+                        );
                         isSwapped = false;
                         buildCount++;
                       },
-              );
-              yield DomComponent(
-                tag: 'button',
+              ),
+              button(
+                [text('button')],
                 events: {
                   'click': (_) => setState(() => isSwapped = !isSwapped),
                 },
-                child: const Text('test'),
-              );
-            },
+              ),
+            ]),
           ),
         );
 

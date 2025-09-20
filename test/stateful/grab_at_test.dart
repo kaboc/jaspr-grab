@@ -258,23 +258,22 @@ void main() {
         int? value;
         tester.pumpComponent(
           StatefulBuilder(
-            builder: (_, setState) sync* {
-              yield StatefulWithMixin(
+            builder: (_, setState) => fragment([
+              StatefulWithMixin(
                 funcCalledInBuild: (context) {
                   value = valueNotifier.grabAt(
                     context,
                     (s) => s.intValue * multiplier,
                   );
                 },
-              );
-              yield DomComponent(
-                tag: 'button',
+              ),
+              button(
+                [text('test')],
                 events: {
                   'click': (_) => setState(() => multiplier = 3),
                 },
-                child: const Text('test'),
-              );
-            },
+              ),
+            ]),
           ),
         );
         expect(value, equals(20));
