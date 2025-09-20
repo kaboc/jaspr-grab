@@ -76,7 +76,7 @@ linter:
     no_self_assignments: true
     noop_primitive_operations: true
     omit_local_variable_types: true
-    omit_obvious_local_variable_types: true
+#    omit_obvious_local_variable_types: true
 #    omit_obvious_property_types: true
     one_member_abstracts: true
     only_throw_errors: true

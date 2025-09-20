@@ -1,3 +1,7 @@
+## 0.6.0
+
+- Bump jaspr version to 0.21.2.
+
 ## 0.5.0
 
 - Raise minimum Dart SDK version to 3.9.0.
